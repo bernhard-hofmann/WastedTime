@@ -7,10 +7,12 @@
 </head>
 <body>
 <center>
-	<div class="button"><a id="waiting">Waiting</a></div>
+	<h1>WAIT TIME</h1>
+
+	<div class="button" id="waiting">Waiting</div>
 	<div id="status"></div>
 	<div id="history"></div>
-	<div class="button"><a id="reset">Reset</a></div>
+	<div class="button" id="reset">Reset</div>
 </center>
 
 <script src="js/jquery-1.7.1.min.js"></script>
@@ -18,14 +20,17 @@
 <script src="js/app.js"></script>
 
 <script>
-$('#reset').bind('click', function(event) {
+$('#reset').bind('touchstart', function(event) {
+	event.preventDefault();
 	APP.reset();
 });
 $('#waiting').bind('touchstart', function(event) {
+	event.preventDefault();
 	APP.start();
 	$('#status').html('<p>Waiting...</p>');
 });
 $('#waiting').bind('touchend', function(event) {
+	event.preventDefault();
 	APP.stop();
 });
 $.subscribe(APP.EVENT_STOPPED_WAITING, function(duration, cumulativeDuration) {

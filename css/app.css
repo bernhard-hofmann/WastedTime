@@ -1,6 +1,12 @@
 body {
 	font-family:Arial;
 	text-align:center;
+	background-color:black;
+	color:silver;
+}
+h1 {
+	font-size:1.2em;
+	color:white;
 }
 .button {
 	background-color: #8c9cbf;

@@ -2,12 +2,14 @@
 <html>
 <head>
 	<title>Wasted Time</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link rel="stylesheet" href="css/app.css" type="text/css" media="screen">
 </head>
 <body>
 <center>
 	<div class="button"><a id="waiting">Waiting</a></div>
-	<div id="log"></div>
+	<div id="status"></div>
+	<div id="history"></div>
 	<div class="button"><a id="reset">Reset</a></div>
 </center>
 
@@ -21,17 +23,18 @@ $('#reset').bind('click', function(event) {
 });
 $('#waiting').bind('touchstart', function(event) {
 	APP.start();
+	$('#status').html('<p>Waiting...</p>');
 });
 $('#waiting').bind('touchend', function(event) {
 	APP.stop();
 });
 $.subscribe(APP.EVENT_STOPPED_WAITING, function(duration, cumulativeDuration) {
-	var content = '';
 	if (duration > 0) {
-		content = '<p>Waited '+ APP.prettyPrintDuration(duration) +'</p>';
+		$('#status').html('<p>Waited '+ APP.prettyPrintDuration(duration) +'</p>');
+	} else {
+		$('#status').html('');
 	}
-	content += '<p>Cumulative Wait time:<br/>'+ APP.prettyPrintDuration(cumulativeDuration) +'</p>';
-	$('#log').html(content);
+	$('#history').html('<p>Cumulative Wait time:<br/><span class="totalTime">'+ APP.prettyPrintDuration(cumulativeDuration) +'</span></p>');
 });
 APP.init();
 </script>

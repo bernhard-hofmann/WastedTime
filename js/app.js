@@ -42,10 +42,44 @@ var APP = (function(module, window, document, undefined) {
 		$.publish(module.EVENT_STOPPED_WAITING, [durationMs, cumulativeDurationMs]);
 	};
 
+	// TODO: Support more than minutes in the duration.
 	module.prettyPrintDuration = function(durationMs) {
-		var s = durationMs/1000, m = Math.floor(s/60);
-		s = Math.round(s - (m*60));
-		return m +' minutes '+ s +' seconds';
+		var
+			aMinute = 60*1000,
+			anHour = 60*60*1000,
+			aDay = 24*60*60*1000,
+			ms = durationMs,
+			s = Math.floor(durationMs/1000),
+			m = Math.floor(durationMs/aMinute),
+			h = Math.round(durationMs/anHour),
+			d = Math.floor(h/aDay),
+			result = '';
+
+		if (durationMs < 1000) {
+			return durationMs +'ms';
+		}
+
+		ms -= s*1000;
+		s -= m*60;
+		m -= h*60;
+
+		if (d > 0) {
+			result += ' '+ d +' day'+ (d===1?'':'s');
+		}
+		if (h > 0) {
+			result += ' '+ h +' hour'+ (h===1?'':'s');
+		}
+		if (m > 0) {
+			result += ' '+ m +' minute'+ (m===1?'':'s');
+		}
+		if (s > 0) {
+			result += ' '+ s +' second'+ (s===1?'':'s');
+		}
+		if (durationMs < aMinute && ms > 0) {
+			result += ' '+ ms +'ms';
+		}
+
+		return result.replace('  ',' ','g').trim();
 	};
 
 	return module;

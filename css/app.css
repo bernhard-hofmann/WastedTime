@@ -43,3 +43,6 @@ body {
 	-moz-box-shadow: inset 0 0 20px 0 #1d2845, 0 1px 0 white;
 	box-shadow: inset 0 0 20px 0 #1d2845, 0 1px 0 white;
 }
+.totalTime {
+	font-weight:bold;
+}

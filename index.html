@@ -13,9 +13,6 @@
 	<div id="status"></div>
 	<div id="history"></div>
 	<div class="button" id="reset">Reset</div>
-	<p>&nbsp;</p>
-	<div class="button" id="debug">Debug</div>
-	<a href="tests/tests.html">Tests</a>
 </center>
 
 <script src="js/jquery-1.7.1.min.js"></script>
@@ -29,10 +26,6 @@ $('#reset').bind('touchstart', function(event) {
 	if (x) {
 		APP.reset();
 	}
-});
-$('#debug').bind('touchstart', function(event) {
-	event.preventDefault();
-	APP.debug();
 });
 $('#waiting').bind('touchstart', function(event) {
 	event.preventDefault();

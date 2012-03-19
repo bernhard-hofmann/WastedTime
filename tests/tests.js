@@ -53,4 +53,9 @@ $(document).ready(function () {
 		var result = APP.prettyPrintDuration( (1*60*60 + 8*60 + 7)*1000);
 		equals(result, "1 hour 8 minutes 7 seconds");
 	});
+
+	test("Duration of 2706425 ms", function () {
+		var result = APP.prettyPrintDuration(2706425);
+		equals(result, "45 minutes 6 seconds");
+	});
 });

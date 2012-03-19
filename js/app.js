@@ -57,7 +57,7 @@ var APP = (function(module, window, document, undefined) {
 			ms = durationMs,
 			s = Math.floor(durationMs/1000),
 			m = Math.floor(durationMs/aMinute),
-			h = Math.round(durationMs/anHour),
+			h = Math.floor(durationMs/anHour),
 			d = Math.floor(h/aDay),
 			result = '';
 

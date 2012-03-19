@@ -66,13 +66,13 @@ var APP = (function(module, window, document, undefined) {
 		if (d > 0) {
 			result += ' '+ d +' day'+ (d===1?'':'s');
 		}
-		if (h > 0) {
+		if (h > 0 || durationMs > aDay) {
 			result += ' '+ h +' hour'+ (h===1?'':'s');
 		}
-		if (m > 0) {
+		if (m > 0 || durationMs > anHour) {
 			result += ' '+ m +' minute'+ (m===1?'':'s');
 		}
-		if (s > 0) {
+		if (s > 0 || durationMs > aMinute) {
 			result += ' '+ s +' second'+ (s===1?'':'s');
 		}
 		if (durationMs < aMinute && ms > 0) {

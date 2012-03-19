@@ -22,7 +22,10 @@
 <script>
 $('#reset').bind('touchstart', function(event) {
 	event.preventDefault();
-	APP.reset();
+	var x = window.confirm("Reset will permanently erase your cumulative total. Are you sure you want to do this?");
+	if (x) {
+		APP.reset();
+	}
 });
 $('#waiting').bind('touchstart', function(event) {
 	event.preventDefault();

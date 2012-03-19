@@ -13,9 +13,15 @@ var APP = (function(module, window, document, undefined) {
 	module.EVENT_STARTED_WAITING = '0';
 	module.EVENT_WAITING = '1';
 	module.EVENT_STOPPED_WAITING = '2';
+	module.EVENT_MENU = '3';
+
+	module.onMenuKeyDown = function() {
+		$.publish(module.EVENT_MENU, []);
+	}
 
 	module.init = function() {
 		$.publish(module.EVENT_STOPPED_WAITING, [0, myStorage.getObject(cumulativeTotalStorageKey)]);
+		document.addEventListener("menubutton", module.onMenuKeyDown, false);
 	};
 
 	module.reset = function() {
@@ -42,10 +48,8 @@ var APP = (function(module, window, document, undefined) {
 		$.publish(module.EVENT_STOPPED_WAITING, [durationMs, cumulativeDurationMs]);
 	};
 
-	module.debug = function() {
-		var cumulativeDurationMs;
-		cumulativeDurationMs = myStorage.getObject(cumulativeTotalStorageKey);
-		window.alert('The cumulative total wait time is '+ cumulativeDurationMs +'ms');
+	module.cumulativeTotalMs = function() {
+		return myStorage.getObject(cumulativeTotalStorageKey);
 	};
 
 	// TODO: Support more than minutes in the duration.

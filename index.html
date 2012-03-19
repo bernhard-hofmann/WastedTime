@@ -13,6 +13,11 @@
 	<div id="status"></div>
 	<div id="history"></div>
 	<div class="button" id="reset">Reset</div>
+
+	<div id="menu">
+		<div><a href="about.html">About</a></div>
+		<div><a href="debug.html">Debug</a></div>
+	</div>
 </center>
 
 <script src="js/jquery-1.7.1.min.js"></script>
@@ -35,6 +40,14 @@ $('#waiting').bind('touchstart', function(event) {
 $('#waiting').bind('touchend', function(event) {
 	event.preventDefault();
 	APP.stop();
+});
+$.subscribe(APP.EVENT_MENU, function() {
+	var displayStyle = $('#menu').css('display');
+	if (displayStyle === 'none') {
+		$('#menu').css({'display':'block'});
+	} else {
+		$('#menu').css({'display':'none'});
+	}
 });
 $.subscribe(APP.EVENT_STOPPED_WAITING, function(duration, cumulativeDuration) {
 	if (duration > 0) {

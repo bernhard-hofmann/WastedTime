@@ -42,6 +42,12 @@ var APP = (function(module, window, document, undefined) {
 		$.publish(module.EVENT_STOPPED_WAITING, [durationMs, cumulativeDurationMs]);
 	};
 
+	module.debug = function() {
+		var cumulativeDurationMs;
+		cumulativeDurationMs = myStorage.getObject(cumulativeTotalStorageKey);
+		window.alert('The cumulative total wait time is '+ cumulativeDurationMs +'ms');
+	};
+
 	// TODO: Support more than minutes in the duration.
 	module.prettyPrintDuration = function(durationMs) {
 		var

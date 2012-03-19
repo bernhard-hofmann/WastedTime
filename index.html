@@ -12,11 +12,12 @@
 	<div class="button" id="waiting">Hold to Wait</div>
 	<div id="status"></div>
 	<div id="history"></div>
-	<div class="button" id="reset">Reset</div>
+	<div class="button" id="menuBtn">Menu</div>
 
 	<div id="menu">
 		<div><a href="about.html">About</a></div>
 		<div><a href="debug.html">Debug</a></div>
+		<div><a href="#" id="reset">Reset</a></div>
 	</div>
 </center>
 
@@ -30,7 +31,8 @@ $('#reset').bind('touchstart', function(event) {
 	var x = window.confirm("Reset will permanently erase your cumulative total. Are you sure you want to do this?");
 	if (x) {
 		APP.reset();
-	}
+	};
+	$('#menu').css({'display':'none'});
 });
 $('#waiting').bind('touchstart', function(event) {
 	event.preventDefault();
@@ -41,7 +43,8 @@ $('#waiting').bind('touchend', function(event) {
 	event.preventDefault();
 	APP.stop();
 });
-$.subscribe(APP.EVENT_MENU, function() {
+$('#menuBtn').bind('touchstart', function(event) {
+	event.preventDefault();
 	var displayStyle = $('#menu').css('display');
 	if (displayStyle === 'none') {
 		$('#menu').css({'display':'block'});

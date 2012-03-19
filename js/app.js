@@ -13,15 +13,9 @@ var APP = (function(module, window, document, undefined) {
 	module.EVENT_STARTED_WAITING = '0';
 	module.EVENT_WAITING = '1';
 	module.EVENT_STOPPED_WAITING = '2';
-	module.EVENT_MENU = '3';
-
-	module.onMenuKeyDown = function() {
-		$.publish(module.EVENT_MENU, []);
-	}
 
 	module.init = function() {
 		$.publish(module.EVENT_STOPPED_WAITING, [0, myStorage.getObject(cumulativeTotalStorageKey)]);
-		document.addEventListener("menubutton", module.onMenuKeyDown, false);
 	};
 
 	module.reset = function() {

@@ -4,6 +4,9 @@ body {
 	background-color:black;
 	color:silver;
 }
+.busy {
+	background-color:red;
+}
 h1 {
 	font-size:1.2em;
 	color:white;

@@ -37,11 +37,13 @@ $('#reset').bind('touchstart', function(event) {
 $('#waiting').bind('touchstart', function(event) {
 	event.preventDefault();
 	APP.start();
+	$('body').addClass('busy');
 	$('#status').html('<p>Waiting...</p>');
 });
 $('#waiting').bind('touchend', function(event) {
 	event.preventDefault();
 	APP.stop();
+	$('body').removeClass('busy');
 });
 $('#menuBtn').bind('touchstart', function(event) {
 	event.preventDefault();

@@ -8,19 +8,23 @@ myStorage.getObject = function(key) {
 }
 
 var APP = (function(module, window, document, undefined) {
-	var startTime, endTime, cumulativeTotalStorageKey = 'TotalTime';
+	var startTime,
+		endTime,
+		cumulativeTotalStorageKey = 'TotalTime',
+		database = openDatabase("WastedTime", "1.0", "Records time wasted waiting", 2*1024*1024);
 
 	module.EVENT_STARTED_WAITING = '0';
 	module.EVENT_WAITING = '1';
 	module.EVENT_STOPPED_WAITING = '2';
+	module.EVENT_UPDATE_TOTAL = '3';
 
 	module.init = function() {
-		$.publish(module.EVENT_STOPPED_WAITING, [0, myStorage.getObject(cumulativeTotalStorageKey)]);
+		$.publish(module.EVENT_UPDATE_TOTAL, [0, myStorage.getObject(cumulativeTotalStorageKey)]);
 	};
 
 	module.reset = function() {
 		myStorage.setObject(cumulativeTotalStorageKey, 0);
-		$.publish(module.EVENT_STOPPED_WAITING, [0, 0]);
+		$.publish(module.EVENT_UPDATE_TOTAL, [0, 0]);
 	};
 
 	module.start = function() {
@@ -39,11 +43,28 @@ var APP = (function(module, window, document, undefined) {
 		cumulativeDurationMs += durationMs;
 		myStorage.setObject(cumulativeTotalStorageKey, cumulativeDurationMs);
 
+		database.transaction(function (tx) {
+			tx.executeSql('CREATE TABLE IF NOT EXISTS Wait (StartTime DATETIME, StopTime DATETIME)');
+			tx.executeSql('INSERT INTO Wait (StartTime, StopTime) VALUES (?, ?)', [startTime, endTime]);
+		});
+
 		$.publish(module.EVENT_STOPPED_WAITING, [durationMs, cumulativeDurationMs]);
 	};
 
 	module.cumulativeTotalMs = function() {
 		return myStorage.getObject(cumulativeTotalStorageKey);
+	};
+
+	module.allWaits = function() {
+		var waits = [], len, i, row;
+		database.transaction(function (tx) {
+			tx.executeSql('SELECT StopTime-StartTime AS "Duration" FROM Wait', [], function (tx, results) {
+				len = results.rows.length;
+				for (i = 0; i < len; i++) {
+					waits.push(results.rows.item(i));
+				}
+			});
+		});
 	};
 
 	// TODO: Support more than minutes in the duration.

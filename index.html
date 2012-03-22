@@ -9,10 +9,12 @@
 <center>
 	<h1>WAIT TIME</h1>
 
-	<div class="button" id="waiting">Hold to Wait</div>
-	<div id="status"></div>
-	<div id="history"></div>
+	<div id="output">
+		<div id="status"><p>No waiting recorded yet</p></div>
+		<div id="history"></div>
+	</div>
 	<div class="button" id="menuBtn">Menu</div>
+	<div class="button" id="waiting">Hold to Wait</div>
 
 	<div id="menu">
 		<div><a href="about.html">About</a></div>
@@ -37,13 +39,13 @@ $('#reset').bind('touchstart', function(event) {
 $('#waiting').bind('touchstart', function(event) {
 	event.preventDefault();
 	APP.start();
-	$('body').addClass('busy');
+	$('#output').addClass('busy');
 	$('#status').html('<p>Waiting...</p>');
 });
 $('#waiting').bind('touchend', function(event) {
 	event.preventDefault();
 	APP.stop();
-	$('body').removeClass('busy');
+	$('#output').removeClass('busy');
 });
 $('#menuBtn').bind('touchstart', function(event) {
 	event.preventDefault();
@@ -60,6 +62,9 @@ $.subscribe(APP.EVENT_STOPPED_WAITING, function(duration, cumulativeDuration) {
 	} else {
 		$('#status').html('');
 	}
+	$('#history').html('<p>Cumulative Wait time:<br/><span class="totalTime">'+ APP.prettyPrintDuration(cumulativeDuration) +'</span></p>');
+});
+$.subscribe(APP.EVENT_UPDATE_TOTAL, function(duration, cumulativeDuration) {
 	$('#history').html('<p>Cumulative Wait time:<br/><span class="totalTime">'+ APP.prettyPrintDuration(cumulativeDuration) +'</span></p>');
 });
 APP.init();
